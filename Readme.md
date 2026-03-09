@@ -12,41 +12,33 @@ healthcare systems worldwide.
 This is Project 1 of 3 in a Healthcare Analytics Portfolio Series. The same dataset is
 also analysed using Excel + Power Query and PostgreSQL.
 
-# 🖼️ Visualizations
-88.7% of patients were not readmitted within 30 daysage_vs_readmission.pngReadmission rate trends upward with age — consistent across real and synthetic datanum_lab_procedures_comparison.pngSynthetic data closely mirrors real lab procedure distributionsnum_medications_comparison.pngSynthetic medication distributions validate Mostly AI qualitynumber_diagnoses_comparison.pngDiagnosis count distributions match between real and synthetictime_in_hospital_comparison.pngHospital stay lengths preserved accurately in synthetic datacorrelation_heatmap.pngnum_medications and num_lab_procedures show strongest feature relationshipsinsulin_vs_readmission.pngPatients with reduced insulin had the highest readmission rate at 14%inpatient_visits_vs_readmission.pngReadmitted patients averaged 2x more prior inpatient visits (1.15 vs 0.56)
-
 # 🔧 Tools & Technologies
-Tool Purpose Julius AI:
+Tool Purpose: 
+
+1. Julius AI:
 AI-assisted data cleaning — ~80% faster than manual 
 
-Mostly AI:
+2. Mostly AI:
 Synthetic patient data generation (HIPAA-compliant privacy augmentation)Python — PandasData loading, manipulation, and combining real + synthetic datasets
 
-Python — Matplotlib & Seaborn:
+3. Python — Matplotlib & Seaborn:
 All 9 visualizations
 
-Jupyter Notebook:
+4. Jupyter Notebook:
 Interactive analysis environment
 
-# 🔄 Pipeline Flow
-Raw CSV (101,766 rows)
-    ↓
-Julius AI — Clean & Encode
-(drop missing columns, encode categoricals, handle outliers)
-    ↓
-Cleaned CSV (98,052 rows, 31 columns)
-    ↓
-Mostly AI — Generate Synthetic Data
-(~98K privacy-safe synthetic patient records)
-    ↓
-Python — Combine, Analyse & Visualise
-(9 charts uncovering readmission patterns)
-    ↓
-Insights
 
 # 🧹 Data Cleaning — Julius AI
 The raw dataset had significant quality issues handled entirely through Julius AI prompts:
-IssueActionDetail? placeholdersReplaced with NaNAcross all columnsHigh-missing columnsDroppedweight (96.9%), max_glu_serum (94.7%), A1Cresult (83.3%), medical_specialty (49.1%), payer_code (39.6%)ID columnsDroppedencounter_id, patient_nbrZero-variance columnsDroppedexamide, citoglipton (100% "No")Near-zero varianceDropped7 medication columns (99%+ "No")Age encodingConverted'[0-10)' → 5, '[10-20)' → 15 … '[90-100)' → 95Gender encodingConvertedMale=1, Female=0, dropped Unknown/InvalidMedication encodingConvertedNo=0, Steady=1, Up=2, Down=3Target columnCreatedreadmitted_binary: '<30'=1, else=0
+1. IssueActionDetail "?" placeholdersReplaced with NaN Across all columns .
+2. High-missing columnsDroppedweight (96.9%), max_glu_serum (94.7%), A1Cresult (83.3%), medical_specialty (49.1%), payer_code (39.6%)ID
+3. columns Dropped : encounter_id, patient_nbr
+4. Zero-variance columns Dropped : examide, citoglipton (100% "No")
+5. Near-zero variance Dropped : 7 medication columns (99%+ "No")
+6. Age encoding Converted'[0-10)' → 5, '[10-20)' → 15 … '[90-100)' → 95
+7. Gender encoding : Converted Male=1, Female=0, dropped Unknown/Invalid
+8. Medication encoding Converted: No=0, Steady=1, Up=2, Down=3
+9. Target column Created readmitted_binary: '<30'=1, else=0
 Result: 101,766 rows → 98,052 clean rows | 50 columns → 31 columns
 
 # 🧬 Synthetic Data — Mostly AI
@@ -60,52 +52,22 @@ The 4 real vs synthetic comparison charts confirm Mostly AI preserved distributi
 across lab procedures, medications, diagnoses, and hospital stay lengths.
 
 # 📊 Key Findings
-FindingDetailOverall Readmission Rate11.3% of 98,052 patients were readmitted within 30 daysHighest Risk Insulin GroupPatients with reduced insulin had a 14% readmission rate vs 10.1% on no insulinPrior Visits SignalReadmitted patients averaged 1.15 prior inpatient visits vs 0.56 — over 2x moreAge PatternReadmission rate climbs from 6.7% (age 10-20) to 12% (age 80-90)Synthetic Data QualityAll 4 comparison charts confirm Mostly AI preserved real distributions accurately
+1. Overall Readmission Rate: Overall Readmission Rate 11.3% of 98,052 patients were readmitted within 30 days
+2. Highest Risk Insulin Group : Patients with reduced insulin had a 14% readmission rate vs 10.1% on no insulin
+3. Prior Visits Signal: Readmitted patients averaged 1.15 prior inpatient visits vs 0.56 — over 2x more
+4. Age Pattern: Readmission rate climbs from 6.7% (age 10-20) to 12% (age 80-90)
+5. Synthetic Data Quality : All 4 comparison charts confirm Mostly AI preserved real distributions accurately
 
-# 📁 Project Structure
-AI-HEALTHCARE-PROJECT/
-│
-├── 📂 data/
-│   ├── processed/
-│   │   ├── diabetic_data_cleaned.csv         # Cleaned output from Julius AI
-│   │   └── diabetic_data_for_mostlyai.csv    # Prepped for Mostly AI (diag cols dropped)
-│   ├── raw/
-│   │   └── diabetic_data.csv                 # Original raw dataset
-│   └── synthetic/
-│       └── diabetic_data_synthetic.csv       # Generated by Mostly AI (~98K rows)
-│
-├── 📂 notebook/
-│   └── analysis_visualization.ipynb          # Main Python notebook — all 9 charts
-│
-├── 📂 visuals/
-│   ├── age_vs_readmission.png
-│   ├── correlation_heatmap.png
-│   ├── inpatient_visits_vs_readmission.png
-│   ├── insulin_vs_readmission.png
-│   ├── num_lab_procedures_comparison.png
-│   ├── num_medications_comparison.png
-│   ├── number_diagnoses_comparison.png
-│   ├── readmission_distribution.png
-│   └── time_in_hospital_comparison.png
-│
-├── requirements.txt
-└── README.md
 
 # 🚀 How to Run
 
-Clone this repo
+1. Clone this rep0
 
-bashgit clone https://github.com/[your-username]/ai-healthcare-analytics-pipeline.git
+2. Install dependencies
 
-Install dependencies
+3. Open the notebook
 
-bashpip install -r requirements.txt
-
-Open the notebook
-
-bashjupyter notebook notebook/analysis_visualization.ipynb
-
-Run all cells — charts save automatically to /visuals/
+4. Run all cells — charts save automatically to /visuals/
 
 
 # 🎓 Dataset
